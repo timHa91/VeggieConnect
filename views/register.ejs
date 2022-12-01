@@ -1,30 +1,32 @@
 <% layout('layouts/boilerplate') %>
-    <form action="/register" method="POST" novalidate>
-        <div class="form-group row">
-            <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control-sm" id="inputUsername" name="user[username]"
-                    placeholder="Username" required>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
-                <div class="invalid-feedback">
-                    Please choose a username.
-                </div>
+    <div class="container h-100">
+        <div class="row h-100 justify-content-center align-items-center">
+            <div class="border col-10 col-md-8 col-lg-6">
+                <form action="/register" method="POST" novalidate>
+                    <h1 class="text-center">Register for the Veggie Connect</h1>
+                    <p class="description text-center">Please type in your data</p>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="inputUsername" name="user[username]"
+                            placeholder="Username" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Please choose a username.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="text">Email:</label>
+                        <input type="text" class="form-control" id="staticEmail" value="" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                    </div>
+                    <button class="btn btn-success w-100 mt-2" type="submit">Submit</button>
+                    <p class="text-center mt-2">&copy; Veggie Connect by Tolgay and Tim</p>
+                </form>
             </div>
-            <div class="form-group row">
-                <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control-sm" id="staticEmail" value="" placeholder="Email">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-10">
-                    <input type="password" class="form-control-sm" id="inputPassword" placeholder="Password">
-                </div>
-            </div>
-            <div class="col-12">
-                <button class="btn btn-success" type="submit">Submit</button>
-            </div>
-    </form>
+        </div>
+    </div>

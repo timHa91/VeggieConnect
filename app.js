@@ -8,7 +8,7 @@ const User = require('./models/user');
 const Post = require('./models/post');
 const { findOne } = require('./models/user');
 
-mongoose.connect('mongodb://localhost:27018/veggie-connect', {
+mongoose.connect('mongodb://localhost:27017/veggie-connect', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -30,11 +30,16 @@ app.use(express.static("public"));
 
 app.get('/index', async (req, res) => {
     const testUser = await User.findOne({ username: 'Tester' });
+    console.log(testUser)
     res.render('index', { testUser });
 });
 
 app.get('/register', (req, res) => {
     res.render('register');
+});
+
+app.get('/home', (req, res) => {
+    res.render('home');
 });
 
 app.post('/register', async (req, res) => {
