@@ -1,0 +1,10 @@
+<form action="/<%=user._id%>/post" method="POST">
+    <label for="post">Add your post</label>
+    <div class="input-group mb-3">
+        <input type="text" id="post" name="post[contribute]" required>
+    </div>
+    <div class="input-group mb-3">
+        <input type="file" name="image" class="form-control" id="inputGroupFile02" multiple>
+    </div>
+    <button class="btn btn-success" type="submit">Post</button>
+</form>
