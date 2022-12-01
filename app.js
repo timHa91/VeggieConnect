@@ -8,7 +8,7 @@ const User = require('./models/user');
 const Post = require('./models/post');
 const { findOne } = require('./models/user');
 
-mongoose.connect('mongodb://localhost:27017/veggie-connect', {
+mongoose.connect('mongodb://localhost:27018/veggie-connect', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
