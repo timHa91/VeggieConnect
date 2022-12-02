@@ -2,13 +2,13 @@
     <div class="container h-100">
         <div class="row h-100 justify-content-center align-items-center">
             <div class="border col-10 col-md-8 col-lg-6">
-                <form action="/register" method="POST" novalidate>
+                <form action="/login" method="POST" novalidate>
                     <h1 class="text-center">Login</h1>
                     <p class="description text-center">Please type in your credentials for Login to Veggie Connect</p>
                     <div class="row justify-content-center">
                         <div class="form-group col-4">
                             <label for="username">Username:</label>
-                            <input type="text" class="form-control" id="inputUsername" name="user[username]"
+                            <input type="text" class="form-control" id="inputUsername" name="username"
                                 placeholder="Username" required>
                             <div class="valid-feedback">
                                 Looks good!
@@ -21,7 +21,8 @@
                     <div class="row justify-content-center">
                         <div class="form-group col-4">
                             <label for="password">Password:</label>
-                            <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                            <input type="password" class="form-control" id="inputPassword" name="password"
+                                placeholder="Password">
                         </div>
                     </div>
                     <div class="row justify-content-center">

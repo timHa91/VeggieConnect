@@ -7,7 +7,10 @@ const { appendFile } = require('fs');
 const User = require('./models/user');
 const Post = require('./models/post');
 const { findOne } = require('./models/user');
-
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const session = require('express-session');
+const { nextTick } = require('process');
 mongoose.connect('mongodb://localhost:27017/veggie-connect', {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -28,10 +31,28 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static("public"));
 
+const sessionConfig = {
+    secret: 'thiswillchange',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+};
+app.use(session(sessionConfig));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
 app.get('/index', async (req, res) => {
-    const testUser = await User.findOne({ username: 'Tester' });
-    console.log(testUser)
-    res.render('index', { testUser });
+    // const testUser = await User.findOne({ username: 'Tester' });
+    res.render('index');
 });
 
 app.get('/register', (req, res) => {
@@ -43,14 +64,25 @@ app.get('/home', (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
-    const user = new User(req.body.user);
-    user.save();
-    res.redirect('/index');
-    console.log('user = ' + user);
-})
+    try {
+        const { email, username, password } = req.body;
+        const user = new User({ email, username });
+        const registeredUser = await User.register(user, password);
+        req.login(registeredUser, err => {
+
+            res.redirect('/index');
+        })
+    } catch (e) {
+        res.redirect('/register');
+    }
+});
 
 app.get('/login', (req, res) => {
     res.render('login');
+});
+
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
+    res.render('index');
 });
 
 app.get('/:id/post', async (req, res) => {
@@ -64,6 +96,8 @@ app.post('/:id/post', async (req, res) => {
     post.save();
     res.redirect('/index');
 });
+
+
 
 app.listen(3000, () => {
     console.log("Serving on port 3000");
