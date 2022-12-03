@@ -15,6 +15,10 @@
     opacity: 1;
 }
 
+.tab {
+    display: none;
+}
+
 #prevButton {
     opacity: 0.5;
 }

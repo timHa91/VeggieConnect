@@ -7,82 +7,85 @@
                         <h1 class="text-center">Register for the Veggie Connect</h1>
                     </div>
                     <p class="description text-center">Please type in your data</p>
-                    <div id="username" class="tabOne form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" class="form-control" id="inputUsername" name="username"
-                            placeholder="Username" required>
-                    </div>
-
-                    <div id="email" class="tabOne form-group">
-                        <label for="email">Email:</label>
-                        <input type="text" class="form-control" id="staticEmail" name="email" placeholder="Email">
-                    </div>
-
-                    <div id="password" class="tabOne form-group">
-                        <label for="password">Password:</label>
-                        <input type="password" class="form-control" id="inputPassword" name="password"
-                            placeholder="Password">
-                    </div>
-                    <div class="tabTwo form-group">
-                        <label for="firstname">First Name:</label>
-                        <input type="text" class="form-control" id="inputFirstName" name="firstname"
-                            placeholder="First Name" required>
-                        <div class="valid-feedback">
-                            Looks good!
+                    <div class="tab">
+                        <div id="username" class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" class="form-control" id="inputUsername" name="username"
+                                placeholder="Username" required>
                         </div>
-                        <div class="invalid-feedback">
-                            Please choose a username.
+
+                        <div id="email" class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="text" class="form-control" id="staticEmail" name="email" placeholder="Email">
+                        </div>
+
+                        <div id="password" class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" class="form-control" id="inputPassword" name="password"
+                                placeholder="Password">
                         </div>
                     </div>
-                    <div class="tabTwo form-group">
-                        <label for="lastname">Last Name:</label>
-                        <input type="text" class="form-control" id="inputLastName" name="lastname"
-                            placeholder="Last Name">
+                    <div class="tab">
+                        <div class="form-group">
+                            <label for="firstname">First Name:</label>
+                            <input type="text" class="form-control" id="inputFirstName" name="firstname"
+                                placeholder="First Name" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please choose a username.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname">Last Name:</label>
+                            <input type="text" class="form-control" id="inputLastName" name="lastname"
+                                placeholder="Last Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age:</label>
+                            <input type="text" class="form-control" id="inputAge" name="age" placeholder="Age">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender:</label>
+                            <select name="gender" class="form-select" aria-label="Default select example">
+                                <option selected>Select Gender</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                                <option value="3">Diverse</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="genderInterest">I'm Interested in:</label>
+                            <select name="genderInterest" class="form-select" aria-label="Default select example">
+                                <option selected>Select Interested Gender</option>
+                                <option value="1">Male</option>
+                                <option value="2">Female</option>
+                                <option value="3">Transgender</option>
+                                <option value="4">Give me all!</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Give a brief description of yourself:
+                            </label>
+                            <textarea class="form-control" id="inputDiscription" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="profilePicture">Upload a Profilpicture:</label>
+                            <input type="file" class="form-control" id="profilePicture" />
+                        </div>
                     </div>
-                    <div class="tabTwo form-group">
-                        <label for="age">Age:</label>
-                        <input type="text" class="form-control" id="inputAge" name="age" placeholder="Age">
-                    </div>
-                    <div class="tabTwo form-group">
-                        <label for="gender">Gender:</label>
-                        <select name="gender" class="form-select" aria-label="Default select example">
-                            <option selected>Select Gender</option>
-                            <option value="1">Male</option>
-                            <option value="2">Female</option>
-                            <option value="3">Diverse</option>
-                        </select>
-                    </div>
-                    <div class="tabTwo form-group">
-                        <label for="genderInterest">I'm Interested in:</label>
-                        <select name="genderInterest" class="form-select" aria-label="Default select example">
-                            <option selected>Select Interested Gender</option>
-                            <option value="1">Male</option>
-                            <option value="2">Female</option>
-                            <option value="3">Transgender</option>
-                            <option value="4">Both</option>
-                        </select>
-                    </div>
-                    <div class="tabTwo form-group">
-                        <label for="description">Give a brief description of yourself:
-                        </label>
-                        <textarea class="form-control" id="inputDiscription" rows="3"></textarea>
-                    </div>
-                    <div class="tabTwo form-group">
-                        <label class="form-label" for="profilePicture">Upload a Profilpicture:</label>
-                        <input type="file" class="form-control" id="profilePicture" />
-                    </div>
-                    <div class="tabThree form-group">
+                    <div class="tab form-group">
                         <label for="description">Tell us about your passions:
                         </label>
                         <textarea class="form-control" id="inputPassion" rows="3"></textarea>
                     </div>
                     <hr />
-                    <!-- <button class="btn btn-success w-100 mt-2" type="submit">Submit</button> -->
                     <div class="row justify-content-end">
                         <div class="col-4 text-end">
-                            <button id="prevButton" onclick="clickHandlerPrevButton()" class="btn btn-success"
+                            <button id="prevButton" onclick="clickHandlerButton(-1)" class="btn btn-success"
                                 type="button">Previous</button>
-                            <button id="nextButton" onclick="clickHandlerNextButton()" class="btn btn-success"
+                            <button id="nextButton" onclick="clickHandlerButton(1)" class="btn btn-success"
                                 type="button">Next</button>
                         </div>
                     </div>

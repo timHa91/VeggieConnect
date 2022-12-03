@@ -2,58 +2,39 @@ let currentTab = 0
 const stepDots = document.getElementsByClassName("step")
 const prevButton = document.getElementById("prevButton")
 const nextButton = document.getElementById("nextButton")
-const contentOne = document.getElementsByClassName("tabOne")
-const contentTwo = document.getElementsByClassName("tabTwo")
-const contentThree = document.getElementsByClassName("tabThree")
+const content = document.getElementsByClassName("tab")
+const form = document.getElementById("regForm")
 
 const showTab = (index) => {
     stepDots[currentTab].setAttribute("class", "step active")
+
     if (currentTab === 0) {
+        content[currentTab].style.display = "inline"
         prevButton.style.display = "none"
-        for (let element of contentTwo) {
-            element.style.display = "none"
-        }
-        for (let element of contentOne) {
-            element.style.display = "inline"
-        }
     }
+    else (prevButton.style.display = "inline")
 
-    if (currentTab === 1) {
-        prevButton.style.display = "inline"
-        nextButton.style.display = "inline"
-        for (let element of contentOne) {
-            element.style.display = "none"
-        }
-        for (let element of contentTwo) {
-            element.style.display = "inline"
-        }
+    if (currentTab === stepDots.length - 1) {
+        nextButton.innerHTML = "Submit"
     }
-    if (currentTab === 2) {
-        nextButton.style.display = "none"
-        prevButton.style.display = "inline"
-        for (let element of contentOne) {
-            element.style.display = "none"
-        }
-        for (let element of contentTwo) {
-            element.style.display = "none"
-        }
-        for (let element of contentThree) {
-            element.style.display = "inline"
-        }
-    }
+    else nextButton.innerHTML = "Next"
 }
 
-const clickHandlerPrevButton = () => {
+
+const clickHandlerButton = (index) => {
+    //Reset old Tab and Dot
+    content[currentTab].style.display = "none"
     stepDots[currentTab].setAttribute("class", "step")
-    if (currentTab !== 0) currentTab--
+    // Set new Tab and Dot
+    currentTab = currentTab + index
+    if (currentTab >= stepDots.length) {
+        form.submit()
+        return
+    }
+    content[currentTab].style.display = "inline"
+
     showTab(currentTab)
 }
-
-const clickHandlerNextButton = () => {
-    stepDots[currentTab].setAttribute("class", "step")
-    if (currentTab !== stepDots.length - 1) currentTab++
-    showTab(currentTab)
-}
-
 showTab(currentTab)
+
 
