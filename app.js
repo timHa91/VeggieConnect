@@ -11,10 +11,9 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const session = require('express-session');
 const { nextTick } = require('process');
-mongoose.connect('mongodb://localhost:27017/veggie-connect', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+
+// mongoose.connect('mongodb://localhost:27017/veggie-connect').
+//     catch(error => console.log(error));
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
@@ -57,6 +56,10 @@ app.get('/index', async (req, res) => {
 
 app.get('/register', (req, res) => {
     res.render('register');
+});
+
+app.get('/create', (req, res) => {
+    res.render('create');
 });
 
 app.get('/home', (req, res) => {
