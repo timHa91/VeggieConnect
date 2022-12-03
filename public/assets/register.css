@@ -1,0 +1,20 @@
+.step {
+    /* Make circles that indicate the steps of the form: */
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    background-color: #bbbbbb;
+    border: none;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+}
+
+.step.active {
+    background-color: green;
+    opacity: 1;
+}
+
+#prevButton {
+    opacity: 0.5;
+}

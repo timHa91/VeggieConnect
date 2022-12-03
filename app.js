@@ -12,8 +12,10 @@ const LocalStrategy = require('passport-local');
 const session = require('express-session');
 const { nextTick } = require('process');
 
-// mongoose.connect('mongodb://localhost:27017/veggie-connect').
-//     catch(error => console.log(error));
+mongoose.connect('mongodb://localhost:27017/veggie-connect', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
