@@ -49,26 +49,26 @@
                         <div class="form-group">
                             <label for="gender">Gender:</label>
                             <select name="gender" class="form-select" aria-label="Default select example">
-                                <option selected>Select Gender</option>
-                                <option value="1">Male</option>
-                                <option value="2">Female</option>
-                                <option value="3">Diverse</option>
+                                <option disabled selected value>Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Diverse">Diverse</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="genderInterest">I'm Interested in:</label>
-                            <select name="genderInterest" class="form-select" aria-label="Default select example">
-                                <option selected>Select Interested Gender</option>
-                                <option value="1">Male</option>
-                                <option value="2">Female</option>
-                                <option value="3">Transgender</option>
-                                <option value="4">Give me all!</option>
+                            <select name="displayGender" class="form-select" aria-label="Default select example">
+                                <option disabled selected value>Select Interested Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Diverse">Diverse</option>
+                                <option value="Display All">Display All</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="description">Give a brief description of yourself:
                             </label>
-                            <textarea class="form-control" id="inputDiscription" rows="3"></textarea>
+                            <textarea class="form-control" id="inputDiscription" name="description" rows="3"></textarea>
                         </div>
                         <div class="form-group">
                             <label class="form-label" for="profilePicture">Upload a Profilpicture:</label>

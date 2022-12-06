@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -13,14 +14,22 @@ const UserSchema = new Schema({
     },
     email: {
         type: String,
-        // required: true,
+        required: true,
+        unique: true
     },
+    firstname: String,
+    lastname: String,
+    description: String,
+    //profilePicture: ImageSchema,
     gender: {
         type: String,
-        enum: ['male', 'female', 'diverse']
+        enum: ['Male', 'Female', 'Diverse']
     },
     age: Number,
-    interest: [String]
+    displayGender: {
+        type: String,
+        enum: ['Male', 'Female', 'Diverse', 'Display All']
+    }
 })
 
 /*UserSchema.plugin(passportLocalMongoose);*/

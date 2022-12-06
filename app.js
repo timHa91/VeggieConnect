@@ -66,12 +66,25 @@ app.get('/register', (req, res) => {
 
 
 app.post('/register', async (req, res) => {
-    const { username, password, email } = req.body;
-    if (await User.findOne({ username: username, email: email }) !== null) {
-        const user = new User({ password, username, email });
-        user.save();
+    const { username, password, email, firstname, lastname, description, gender, age, displayGender } = req.body;
+
+    try {
+        const user = new User({ password, username, email, firstname, lastname, description, gender, age, displayGender });
+        await user.save();
         res.redirect('index');
+    } catch (e) {
+        if (e.message.indexOf('11000') != -1) {
+            res.send('User or E-Mail already exists!');
+        }
     }
+
+    /*    if (await User.findOne({ username: username }) === null) {
+           const user = new User({ password, username, email });
+           user.save();
+           res.redirect('index');
+       } else {
+           res.send('already exist');
+       } */
 
 })
 
@@ -102,6 +115,15 @@ app.post('/register', async (req, res) => {
 app.get('/login', (req, res) => {
     res.render('login');
 });
+
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    if (await User.findOne({ username: username, password: password }) !== null) {
+        res.redirect('index');
+    } else {
+        res.send('Wrong credentials!')
+    }
+})
 /*
 app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
     res.render('index');
