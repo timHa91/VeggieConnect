@@ -6,11 +6,11 @@ const ejsMate = require('ejs-mate');
 const { appendFile } = require('fs');
 const User = require('./models/user');
 const Post = require('./models/post');
-const { findOne } = require('./models/user');
-const passport = require('passport');
+const { findOne, findByUsername } = require('./models/user');
+/*const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const session = require('express-session');
-const { nextTick } = require('process');
+const session = require('express-session');*/
+
 
 mongoose.connect('mongodb://localhost:27017/veggie-connect', {
     useNewUrlParser: true,
@@ -32,6 +32,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static("public"));
 
+
+
+/*
 const sessionConfig = {
     secret: 'thiswillchange',
     resave: false,
@@ -42,6 +45,7 @@ const sessionConfig = {
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 };
+
 app.use(session(sessionConfig));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -49,7 +53,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
-
+*/
 
 app.get('/index', async (req, res) => {
     // const testUser = await User.findOne({ username: 'Tester' });
@@ -60,6 +64,17 @@ app.get('/register', (req, res) => {
     res.render('register');
 });
 
+
+app.post('/register', async (req, res) => {
+    const { username, password, email } = req.body;
+    if (await User.findOne({ username: username, email: email }) !== null) {
+        const user = new User({ password, username, email });
+        user.save();
+        res.redirect('index');
+    }
+
+})
+
 app.get('/create', (req, res) => {
     res.render('create');
 });
@@ -68,6 +83,7 @@ app.get('/home', (req, res) => {
     res.render('home');
 });
 
+/*
 app.post('/register', async (req, res) => {
     try {
         const { email, username, password } = req.body;
@@ -81,16 +97,18 @@ app.post('/register', async (req, res) => {
         res.redirect('/register');
     }
 });
+*/
 
 app.get('/login', (req, res) => {
     res.render('login');
 });
-
+/*
 app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
     res.render('index');
 });
-
+*/
 app.get('/:id/post', async (req, res) => {
+    s
     const user = await User.findById(req.params.id);
     res.render('post', { user });
 });
