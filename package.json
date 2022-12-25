@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/timHa91/VeggieConnect#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "bootstrap": "^5.2.3",
     "ejs": "^3.1.8",
     "ejs-mate": "^4.0.0",

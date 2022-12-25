@@ -7,9 +7,11 @@ const { appendFile } = require('fs');
 const User = require('./models/user');
 const Post = require('./models/post');
 const { findOne, findByUsername } = require('./models/user');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
+
 /*const passport = require('passport');
-const LocalStrategy = require('passport-local');
-const session = require('express-session');*/
+const LocalStrategy = require('passport-local');*/
 
 
 mongoose.connect('mongodb://localhost:27017/veggie-connect', {
@@ -32,9 +34,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static("public"));
 
-
-
-/*
 const sessionConfig = {
     secret: 'thiswillchange',
     resave: false,
@@ -47,6 +46,7 @@ const sessionConfig = {
 };
 
 app.use(session(sessionConfig));
+/*
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -56,8 +56,14 @@ passport.deserializeUser(User.deserializeUser());
 */
 
 app.get('/index', async (req, res) => {
-    // const testUser = await User.findOne({ username: 'Tester' });
-    res.render('index');
+    if (!req.session.user_id) {
+        res.send('You need to be logged in')
+    }
+    else {
+        const user = await User.findById(req.session.user_id);
+        res.render('index', { user });
+
+    }
 });
 
 app.get('/register', (req, res) => {
@@ -69,23 +75,16 @@ app.post('/register', async (req, res) => {
     const { username, password, email, firstname, lastname, description, gender, age, displayGender } = req.body;
 
     try {
-        const user = new User({ password, username, email, firstname, lastname, description, gender, age, displayGender });
+        const hash = await bcrypt.hash(password, 12);
+        const user = new User({ password: hash, username, email, firstname, lastname, description, gender, age, displayGender });
         await user.save();
+        req.session.user_id = user._id;
         res.redirect('index');
     } catch (e) {
         if (e.message.indexOf('11000') != -1) {
             res.send('User or E-Mail already exists!');
         }
     }
-
-    /*    if (await User.findOne({ username: username }) === null) {
-           const user = new User({ password, username, email });
-           user.save();
-           res.redirect('index');
-       } else {
-           res.send('already exist');
-       } */
-
 })
 
 app.get('/create', (req, res) => {
@@ -96,21 +95,6 @@ app.get('/home', (req, res) => {
     res.render('home');
 });
 
-/*
-app.post('/register', async (req, res) => {
-    try {
-        const { email, username, password } = req.body;
-        const user = new User({ email, username });
-        const registeredUser = await User.register(user, password);
-        req.login(registeredUser, err => {
-
-            res.redirect('/index');
-        })
-    } catch (e) {
-        res.redirect('/register');
-    }
-});
-*/
 
 app.get('/login', (req, res) => {
     res.render('login');
@@ -118,19 +102,26 @@ app.get('/login', (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    if (await User.findOne({ username: username, password: password }) !== null) {
-        res.redirect('index');
+    const user = await User.findOne({ username: username })
+    if (user !== null) {
+        const validPassword = await bcrypt.compare(password, user.password)
+        if (validPassword) {
+            req.session.user_id = user._id;
+            res.redirect('index');
+        } else {
+            res.send('Wrong credentials!');
+        }
     } else {
-        res.send('Wrong credentials!')
+        res.send('Wrong credentials!');
     }
-})
-/*
-app.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), (req, res) => {
-    res.render('index');
 });
-*/
+
+app.post('/logout', (req, res) => {
+    req.session.user_id = null;
+    res.redirect('login');
+})
+
 app.get('/:id/post', async (req, res) => {
-    s
     const user = await User.findById(req.params.id);
     res.render('post', { user });
 });
