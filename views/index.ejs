@@ -27,25 +27,34 @@
                 </div>
             </form>
             <% for(let i=0;i<user.posts.length; i++ ) {%>
-                <% let options={ year: 'numeric' , month: 'long' , day: 'numeric' }; %>
-                    <div class="card mt-3">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <%=user.username%>
-                            </h5>
-                            <h6>
-                                <%=user.posts[i].date.toLocaleDateString("en-US", options);%>
-                            </h6>
-                            <p class="card-text">
-                                <%=user.posts[i].text %>
-                            </p>
+                <% const options={ year: 'numeric' , month: 'long' , day: 'numeric' }; %>
+                    <% let postDate=user.posts[i].date.toLocaleDateString('de-DE', options);%>
 
+                        <div class="card mt-3">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%=user.username%>
+                                </h5>
+                                <h6>
+                                    <%=postDate%>
+                                </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <p class="card-text">
+                                        <%=user.posts[i].text %>
+                                    </p>
+                                    <form action="/<%=user._id%>/index?_method=DELETE" method="POST">
+                                        <input type="hidden" name="postId" value="<%=user.posts[i]._id%>">
+                                        <input type="hidden" name="index" value="<%=i%>">
+                                        <button
+                                            class="btn btn-outline-danger d-flex justify-content-end">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <% } %>
+                        <% } %>
 
         </div>
-        <div class="col-3">
+        <div class=" col-3">
 
         </div>
     </div>

@@ -60,7 +60,7 @@ app.get('/:id/index', async (req, res) => {
         res.send('You need to be logged in')
     }
     else {
-        const user = await User.findById(req.session.user_id);
+        const user = await User.findById(req.params.id).populate('posts');
         res.render('index', { user });
 
     }
@@ -73,9 +73,17 @@ app.post('/:id/index', async (req, res) => {
     await post.save();
     user.posts.push(post);
     await user.save();
-    console.log(user.posts)
-    res.render('index', { user, post });
+    res.render('index', { user });
 });
+
+app.delete('/:id/index', async (req, res) => {
+    const { postId, index } = req.body;
+    const user = await User.findById(req.params.id);
+    await Post.findByIdAndDelete(postId);
+    user.posts.splice(index, 1);
+    await user.save();
+    res.redirect('index');
+})
 
 app.get('/register', (req, res) => {
     res.render('register');
