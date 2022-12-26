@@ -6,7 +6,8 @@ const PostSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    contribute: String
+    text: String,
+    date: Date
 })
 
-module.exports = mongoose.model("Post", PostSchema);
+module.exports = mongoose.model('Post', PostSchema);

@@ -6,7 +6,7 @@ const ejsMate = require('ejs-mate');
 const { appendFile } = require('fs');
 const User = require('./models/user');
 const Post = require('./models/post');
-const { findOne, findByUsername } = require('./models/user');
+const { findOne, findByUsername, findById } = require('./models/user');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 
@@ -55,7 +55,7 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 */
 
-app.get('/index', async (req, res) => {
+app.get('/:id/index', async (req, res) => {
     if (!req.session.user_id) {
         res.send('You need to be logged in')
     }
@@ -64,6 +64,17 @@ app.get('/index', async (req, res) => {
         res.render('index', { user });
 
     }
+});
+
+app.post('/:id/index', async (req, res) => {
+    const post = new Post(req.body.post);
+    const user = await User.findById(req.params.id).populate('posts');
+    post.date = new Date();
+    await post.save();
+    user.posts.push(post);
+    await user.save();
+    console.log(user.posts)
+    res.render('index', { user, post });
 });
 
 app.get('/register', (req, res) => {
@@ -79,7 +90,7 @@ app.post('/register', async (req, res) => {
         const user = new User({ password: hash, username, email, firstname, lastname, description, gender, age, displayGender });
         await user.save();
         req.session.user_id = user._id;
-        res.redirect('index');
+        res.redirect(`${user._id}/index`);
     } catch (e) {
         if (e.message.indexOf('11000') != -1) {
             res.send('User or E-Mail already exists!');
@@ -107,7 +118,7 @@ app.post('/login', async (req, res) => {
         const validPassword = await bcrypt.compare(password, user.password)
         if (validPassword) {
             req.session.user_id = user._id;
-            res.redirect('index');
+            res.redirect(`${user._id}/index`);
         } else {
             res.send('Wrong credentials!');
         }
@@ -126,12 +137,12 @@ app.get('/:id/post', async (req, res) => {
     res.render('post', { user });
 });
 
-app.post('/:id/post', async (req, res) => {
+/* app.post('/:id/post', async (req, res) => {
     const post = new Post(req.body.post);
     console.log('post = ' + post);
     post.save();
     res.redirect('/index');
-});
+}); */
 
 
 

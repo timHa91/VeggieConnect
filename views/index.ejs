@@ -1,17 +1,51 @@
 <% layout('layouts/boilerplate') %>
 
-    <h1>
-        <%=user.username%>
-    </h1>
-    <a href="">Add Post</a>
+    <div class="row mt-3">
+        <div class="col-3">
 
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">User Name</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                card's
-                content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
-        <img src="" class="card-img-top" alt="...">
+        <div class="col-6" style=overflow:auto>
+
+            <form action="/<%=user._id%>/index" method="POST">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            Hello <%=user.username%>
+                        </h5>
+                        <p class="card-text">
+                        <div class="mb-3">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Add your post"
+                                rows="1" name="post[text]"></textarea>
+                        </div>
+                        </p>
+                        <div class="input-group mb-3">
+                            <input type="file" name="post[image]" class="form-control" id="inputGroupFile02" multiple
+                                name="text">
+                        </div>
+                        <button class="btn btn-success" type="submit">Post</button>
+                    </div>
+                </div>
+            </form>
+            <% for(let i=0;i<user.posts.length; i++ ) {%>
+                <% let options={ year: 'numeric' , month: 'long' , day: 'numeric' }; %>
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%=user.username%>
+                            </h5>
+                            <h6>
+                                <%=user.posts[i].date.toLocaleDateString("en-US", options);%>
+                            </h6>
+                            <p class="card-text">
+                                <%=user.posts[i].text %>
+                            </p>
+
+                        </div>
+                    </div>
+                    <% } %>
+
+        </div>
+        <div class="col-3">
+
+        </div>
     </div>
