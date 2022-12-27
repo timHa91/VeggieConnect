@@ -38,15 +38,17 @@
                                 <h6>
                                     <%=postDate%>
                                 </h6>
+                                <p class="card-text">
+                                    <%=user.posts[i].text %>
+                                </p>
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <p class="card-text">
-                                        <%=user.posts[i].text %>
-                                    </p>
+                                    <button class="btn btn-outline-success d-flex justify-content-end"><i
+                                            class="fa-regular fa-thumbs-up"></i>Like</button>
                                     <form action="/<%=user._id%>/index?_method=DELETE" method="POST">
                                         <input type="hidden" name="postId" value="<%=user.posts[i]._id%>">
                                         <input type="hidden" name="index" value="<%=i%>">
-                                        <button
-                                            class="btn btn-outline-danger d-flex justify-content-end">Delete</button>
+                                        <button class="btn btn-outline-danger d-flex justify-content-end"><i
+                                                class="fa-solid fa-trash"></i>Delete</button>
                                     </form>
                                 </div>
                             </div>
