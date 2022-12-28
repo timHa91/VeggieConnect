@@ -1,0 +1,25 @@
+.navigatorList {
+    padding: none;
+    margin: none;
+}
+
+.navigatorList div {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    border-radius: 5px;
+    padding-left: 10px;
+    margin-left: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.navigatorList div span {
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.navigatorList div:hover {
+    background-color: #62ff9e;
+}
